@@ -9,7 +9,6 @@ namespace Console_Games.src.Database
 {
     class DatabaseManager
     {
-
         public struct Data
         {
             public string variableName;

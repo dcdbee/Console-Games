@@ -11,15 +11,23 @@ namespace Console_Games
 {
     class Program
     {
+        struct Cache 
+        {
+            public string username;
+            public bool loggedIn;
+        }
+
 
         static void Main()
         {
             DatabaseManager.CreateDB("Data");
-            Register.CreateAccount("Data", "test", "lol");
+            Register.CreateAccount("Data", "xd", "hey");
 
             DatabaseManager.Data Retrieve;
             Retrieve = DatabaseManager.RetrieveFromDB("Data", "Username", "string", "Password", "string", "matt");
             Console.WriteLine(Retrieve.variableName + " " + Retrieve.type + " " + Retrieve.contents);
+
+            Console.WriteLine(Login.LoginAccount("Data", "username", "pass")); //returns true or false
 
             Console.ReadKey();
         }

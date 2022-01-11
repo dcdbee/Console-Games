@@ -9,7 +9,6 @@ namespace Console_Games.src.Account
 {
     class AccountManager
     {
-
         public static DatabaseManager.Data[] GenerateAccountInfo(string username, string password){
             DatabaseManager.Data UsernameData;
             DatabaseManager.Data PasswordData;
