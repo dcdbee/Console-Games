@@ -15,5 +15,9 @@ namespace Console_Games.src.Account
             Retrieve = DatabaseManager.RetrieveFromDB("Data", "Username", "string", "Password", "string", username);
             return (password == Retrieve.contents);
         }
+        //AccountManager.Cache tcache;
+        //tcache.username = username;
+        //    tcache.loggedIn = true;
+        //    AccountManager.SetCache(tcache);
     }
 }

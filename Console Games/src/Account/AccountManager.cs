@@ -9,6 +9,23 @@ namespace Console_Games.src.Account
 {
     class AccountManager
     {
+        public static Cache userCache;
+        public struct Cache
+        {
+            public string username;
+            public bool loggedIn;
+        }
+
+        public static Cache GetCache()
+        {
+            return userCache;
+        }
+
+        public static void SetCache(Cache cache)
+        {
+            userCache = cache;
+        }
+
         public static DatabaseManager.Data[] GenerateAccountInfo(string username, string password){
             DatabaseManager.Data UsernameData;
             DatabaseManager.Data PasswordData;

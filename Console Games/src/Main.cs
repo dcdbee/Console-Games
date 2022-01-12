@@ -4,20 +4,12 @@ using System.Linq;
 using System.Text;
 using Console_Games.src.Database;
 using Console_Games.src.Account;
-
 using System.Threading.Tasks;
 
 namespace Console_Games
 {
     class Program
     {
-        struct Cache 
-        {
-            public string username;
-            public bool loggedIn;
-        }
-
-
         static void Main()
         {
             DatabaseManager.CreateDB("Data");
