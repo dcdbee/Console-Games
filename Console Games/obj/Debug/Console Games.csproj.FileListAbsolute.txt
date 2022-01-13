@@ -1,0 +1,7 @@
+H:\Desktop\programming tings\Console Games\a\Console Games\bin\Debug\Console Games.exe.config
+H:\Desktop\programming tings\Console Games\a\Console Games\bin\Debug\Console Games.exe
+H:\Desktop\programming tings\Console Games\a\Console Games\bin\Debug\Console Games.pdb
+H:\Desktop\programming tings\Console Games\a\Console Games\obj\Debug\Console Games.csprojAssemblyReference.cache
+H:\Desktop\programming tings\Console Games\a\Console Games\obj\Debug\Console Games.csproj.CoreCompileInputs.cache
+H:\Desktop\programming tings\Console Games\a\Console Games\obj\Debug\Console Games.exe
+H:\Desktop\programming tings\Console Games\a\Console Games\obj\Debug\Console Games.pdb

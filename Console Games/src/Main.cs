@@ -13,7 +13,9 @@ namespace Console_Games
         static void Main()
         {
             DatabaseManager.CreateDB("Data");
-            Register.CreateAccount("Data", "xd", "hey");
+            //Register.CreateAccount("Data", "test", "hey");
+
+            Register.CreateAccountSystem();
 
             DatabaseManager.Data Retrieve;
             Retrieve = DatabaseManager.RetrieveFromDB("Data", "Username", "string", "Password", "string", "matt");

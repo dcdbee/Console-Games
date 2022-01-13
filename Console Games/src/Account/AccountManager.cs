@@ -41,7 +41,6 @@ namespace Console_Games.src.Account
 
         public static bool accountExists(string dbname, string username){
             return DatabaseManager.ExistsInDB(dbname, "Username", "string", username);
-
         }
 
     }

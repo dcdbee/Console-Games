@@ -49,12 +49,11 @@
     <Compile Include="src\Account\Register.cs" />
     <Compile Include="src\Database\DatabaseManager.cs" />
     <Compile Include="src\Main.cs" />
+    <Compile Include="src\Util\TextUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\Util\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
