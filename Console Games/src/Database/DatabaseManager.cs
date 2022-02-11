@@ -24,11 +24,11 @@ namespace Console_Games.src.Database
             }
             else
             {
-                using (FileStream fs = File.Create(                                                                               dbname + ".txt"))
+                using (FileStream fs = File.Create(dbname + ".txt"))
                 {
                     fs.Close();
                 }
-                using (StreamWriter writer = new StreamWriter(                                                                               dbname + ".txt", false))
+                using (StreamWriter writer = new StreamWriter(dbname + ".txt", false))
                 {
                     writer.WriteLine(dbname + " - Created " + DateTime.Now);
                     writer.WriteLine("-==== DATA ====-");
