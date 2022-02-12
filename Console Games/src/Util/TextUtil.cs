@@ -26,5 +26,24 @@ namespace Console_Games.src.Util
             if (newline) { Console.WriteLine(); }
         }
 
+        public static void LoadingFX(int LoadingTime)
+        {
+            string word = "Loading";
+            int count = 0;
+            for (int i = 0; i < LoadingTime; i++)
+            {
+                TextUtil.CosmeticText(word, ConsoleColor.Green, 0, false, false);
+                word += ".";
+                count++;
+                if (count > 3)
+                {
+                    word = "Loading";
+                }
+                Thread.Sleep(500);
+                Console.Clear();
+                Thread.Sleep(2);
+            }
+        }
+
     }
 }

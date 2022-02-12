@@ -5,25 +5,21 @@ using System.Text;
 using Console_Games.src.Database;
 using Console_Games.src.Account;
 using System.Threading.Tasks;
+using Console_Games.src.Games;
 
 namespace Console_Games
 {
+    //Retrieve = DatabaseManager.RetrieveFromDB(dbname, "Username", "string", "Password", "string", "dcdb");
+    ////                                         SELECT Username FROM Data WHERE Password(string) = 'dcdb'
     class Program
     {
         static void Main()
         {
-            DatabaseManager.CreateDB("Data");
-            //Register.CreateAccount("Data", "test", "hey");
-
-            Register.CreateAccountSystem();
-
-            DatabaseManager.Data Retrieve;
-            Retrieve = DatabaseManager.RetrieveFromDB("Data", "Username", "string", "Password", "string", "matt");
-            Console.WriteLine(Retrieve.variableName + " " + Retrieve.type + " " + Retrieve.contents);
-
-            Console.WriteLine(Login.LoginAccount("Data", "username", "pass")); //returns true or false
-
-            Console.ReadKey();
+            GameManager.PlayGame("Hangman");
+            //DatabaseManager.CreateDB(dbname);
+            //Register.CreateAccountSystem();
+            //Login.LoginSystem(dbname);
+            //Console.ReadKey();
         }
     }
 }
