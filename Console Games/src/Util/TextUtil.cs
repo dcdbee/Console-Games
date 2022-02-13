@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,12 +27,29 @@ namespace Console_Games.src.Util
             if (newline) { Console.WriteLine(); }
         }
 
+        public static void CosmeticAscii(string content, ConsoleColor colour)
+        {
+            string[] splitContent = content.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            Console.SetCursorPosition(Console.WindowWidth / 2,Console.WindowHeight / 2);
+            int spacing = Console.WindowWidth / 2 - splitContent[0].Length / 2;
+            for (int i = 0; i < splitContent.Length; i++)
+            {
+                for (int j = 0; j < spacing; j++)
+                {
+                    Console.Write(" ");
+                }
+                Console.Write(splitContent[i]);
+                Console.WriteLine();
+            }
+        }
+
         public static void LoadingFX(int LoadingTime)
         {
             string word = "Loading";
             int count = 0;
             for (int i = 0; i < LoadingTime; i++)
             {
+                TextUtil.EmptySpaces(Console.WindowHeight / 3);
                 TextUtil.CosmeticText(word, ConsoleColor.Green, 0, false, false);
                 word += ".";
                 count++;

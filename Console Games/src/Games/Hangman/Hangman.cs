@@ -13,7 +13,7 @@ namespace Console_Games.src.Games.Hangman
     class Hangman
     {
         const string Wordsurl = "https://raw.githubusercontent.com/Xethron/Hangman/master/words.txt";
-        const string asciiURL = "https://pastebin.com/raw/LY0Da9Qp";
+        const string asciiURL = "https://pastebin.com/raw/auFJ2qDg";
         const int LoadingTime = 50; 
         static string hangmanAscii;
         static string wordList;
@@ -24,9 +24,11 @@ namespace Console_Games.src.Games.Hangman
         {
             public string username;
             public string word;
-            public bool won;
+            public string status;
             public int round;
             public int hangmanStage;
+            public int correctGuesses;
+            public int incorrectGuesses;
         }
 
         public static void Init()
@@ -48,10 +50,12 @@ namespace Console_Games.src.Games.Hangman
 
             Account.AccountManager.Cache tmpCache = Account.AccountManager.GetCache();
             info.username = tmpCache.username;
-            info.won = false;
+            info.status = "playing";
             info.round = 1;
             info.word = generateWord();
             info.hangmanStage = 6;
+            info.correctGuesses = 0;
+            info.incorrectGuesses = 0;
 
             TextUtil.LoadingFX(2);
 
@@ -60,15 +64,22 @@ namespace Console_Games.src.Games.Hangman
 
         public static void PlayGame()
         {
-            info.won = CheckWon();
-            while (!info.won)
+            info.status = CheckEnd();
+            while (info.status == "playing")
             {
                 DisplayBoard();
                 MakeGuess();
-                info.won = CheckWon();
+                info.status = CheckEnd();
             }
             DisplayBoard();
-            Console.WriteLine("WON");
+            if (info.status == "won")
+            {
+                Console.WriteLine("WON");
+            }
+            else if(info.status == "lost")
+            {
+                Console.WriteLine("You lost");
+            }
         }
 
         public static void DisplayBoard()
@@ -85,10 +96,10 @@ namespace Console_Games.src.Games.Hangman
                 else
                 {
                     msg += "_";
+
                 }
                 msg += " "; 
             }
-            TextUtil.EmptySpaces(Console.WindowHeight/3);
             for(int j = 0; j < guessedChars.Count; j++)
             {
                 msg2 += guessedChars[j];
@@ -97,10 +108,16 @@ namespace Console_Games.src.Games.Hangman
                     msg2 += ",";
                 }
             }
-            TextUtil.CosmeticText(msg2, ConsoleColor.Blue, 2, true, true);
+            //TextUtil.CosmeticText(DisplayHangman(info.incorrectGuesses), ConsoleColor.Green, 0, true, true);
+            if(info.incorrectGuesses == 0)
+            {
+                TextUtil.EmptySpaces(5);
+            }
+            TextUtil.CosmeticAscii(DisplayHangman(info.incorrectGuesses), ConsoleColor.Green);
             TextUtil.EmptySpaces(1);
-            TextUtil.CosmeticText(msg, ConsoleColor.Blue, 2, true, true);
-
+            TextUtil.CosmeticText(msg2, ConsoleColor.Blue, 0, true, true);
+            TextUtil.EmptySpaces(1);
+            TextUtil.CosmeticText(msg, ConsoleColor.Blue, 0, true, true);
         }
 
         public static void MakeGuess()
@@ -108,7 +125,7 @@ namespace Console_Games.src.Games.Hangman
             bool valid = false;
             char guessChar = '.';
             TextUtil.EmptySpaces(2);
-            TextUtil.CosmeticText("INPUT:", ConsoleColor.White, 5, true, false);
+            TextUtil.CosmeticText("INPUT:", ConsoleColor.White, 0, true, false);
             string input = Console.ReadLine();
             while (!valid)
             {
@@ -119,6 +136,14 @@ namespace Console_Games.src.Games.Hangman
                     if (GuessedCheck(guessChar))
                     {
                         TextUtil.CosmeticText("ERROR: You have already guessed that character.", ConsoleColor.Red, 25, true, true);
+                        valid = false;
+                        TextUtil.EmptySpaces(1);
+                        TextUtil.CosmeticText("INPUT:", ConsoleColor.White, 50, true, false);
+                        input = Console.ReadLine();
+                    }
+                    if (!validChar(guessChar))
+                    {
+                        TextUtil.CosmeticText("ERROR: Invalid character.", ConsoleColor.Red, 25, true, true);
                         valid = false;
                         TextUtil.EmptySpaces(1);
                         TextUtil.CosmeticText("INPUT:", ConsoleColor.White, 50, true, false);
@@ -135,6 +160,34 @@ namespace Console_Games.src.Games.Hangman
                 }
             }
             guessedChars.Add(guessChar);
+            bool correct = false;
+            for (int i = 0; i < info.word.Length; i++)
+            {
+                if (info.word[i] == guessChar)
+                {
+                    info.correctGuesses++;
+                    correct = true;
+                }
+            }
+            if (!correct)
+            {
+                info.incorrectGuesses++;
+            }
+            
+        }
+
+        public static bool validChar(char character)
+        {
+            bool valid = false;
+            char[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+            for(int i = 0; i < alphabet.Length; i++)
+            {
+                if (character == alphabet[i])
+                {
+                    valid = true;
+                }
+            }
+            return valid;
         }
 
         public static bool GuessedCheck(char character)
@@ -149,16 +202,20 @@ namespace Console_Games.src.Games.Hangman
             return false;
         }
 
-        public static bool CheckWon()
+        public static string CheckEnd()
         {
+            if(info.incorrectGuesses >= 7)
+            {
+                return "lost";
+            }
             for(int i = 0; i < info.word.Length; i++)
             {
                 if (!GuessedCheck(info.word[i]))
                 {
-                    return false;
+                    return "playing";
                 }
             }
-            return true;
+            return "won";
         }
 
         public static string Retrieve(string url)
@@ -170,7 +227,7 @@ namespace Console_Games.src.Games.Hangman
 
         public static string DisplayHangman(int num)
         {
-            string[] splitContent = hangmanAscii.Split('/');
+            string[] splitContent = hangmanAscii.Split('@');
             return splitContent[num];
         }
 

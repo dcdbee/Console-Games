@@ -13,11 +13,13 @@ namespace Console_Games
     ////                                         SELECT Username FROM Data WHERE Password(string) = 'dcdb'
     class Program
     {
+        const string dbname = "Data";
         static void Main()
         {
+            Console.ReadKey();
+            DatabaseManager.CreateDB(dbname);
+            Register.CreateAccountSystem();
             GameManager.PlayGame("Hangman");
-            //DatabaseManager.CreateDB(dbname);
-            //Register.CreateAccountSystem();
             //Login.LoginSystem(dbname);
             //Console.ReadKey();
         }
