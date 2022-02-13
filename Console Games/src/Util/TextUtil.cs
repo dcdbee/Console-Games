@@ -45,5 +45,19 @@ namespace Console_Games.src.Util
             }
         }
 
+        public static void EmptySpaces(int amount)
+        {
+            for(int i = 0; i < amount; i++)
+            {
+                Console.WriteLine();
+            }
+        }
+
+        public static void ErrorHandling(Exception e)
+        {
+            string message = "ERROR: " + e.Message;
+            CosmeticText(message, ConsoleColor.Red, 25, true, true);
+        }
+
     }
 }

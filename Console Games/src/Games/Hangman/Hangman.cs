@@ -14,9 +14,11 @@ namespace Console_Games.src.Games.Hangman
     {
         const string Wordsurl = "https://raw.githubusercontent.com/Xethron/Hangman/master/words.txt";
         const string asciiURL = "https://pastebin.com/raw/LY0Da9Qp";
-        const int LoadingTime = 5; 
+        const int LoadingTime = 50; 
         static string hangmanAscii;
         static string wordList;
+        static List<char> guessedChars = new List<char>();
+        static GameInfo info;
 
         public struct GameInfo
         {
@@ -30,7 +32,6 @@ namespace Console_Games.src.Games.Hangman
         public static void Init()
         {
             Loading();
-            Console.WriteLine(DisplayHangman(1));
             Console.ReadKey();
         }
 
@@ -45,7 +46,6 @@ namespace Console_Games.src.Games.Hangman
                 wordList = Retrieve(Wordsurl);
             }
 
-            GameInfo info;
             Account.AccountManager.Cache tmpCache = Account.AccountManager.GetCache();
             info.username = tmpCache.username;
             info.won = false;
@@ -54,6 +54,111 @@ namespace Console_Games.src.Games.Hangman
             info.hangmanStage = 6;
 
             TextUtil.LoadingFX(2);
+
+            PlayGame();
+        }
+
+        public static void PlayGame()
+        {
+            info.won = CheckWon();
+            while (!info.won)
+            {
+                DisplayBoard();
+                MakeGuess();
+                info.won = CheckWon();
+            }
+            DisplayBoard();
+            Console.WriteLine("WON");
+        }
+
+        public static void DisplayBoard()
+        {
+            Console.Clear();
+            string msg = "";
+            string msg2 = "Guessed letters: ";
+            for (int i = 0; i < info.word.Length; i++)
+            {
+                if (GuessedCheck(info.word[i]))
+                {
+                    msg += info.word[i];
+                }
+                else
+                {
+                    msg += "_";
+                }
+                msg += " "; 
+            }
+            TextUtil.EmptySpaces(Console.WindowHeight/3);
+            for(int j = 0; j < guessedChars.Count; j++)
+            {
+                msg2 += guessedChars[j];
+                if(j != guessedChars.Count)
+                {
+                    msg2 += ",";
+                }
+            }
+            TextUtil.CosmeticText(msg2, ConsoleColor.Blue, 2, true, true);
+            TextUtil.EmptySpaces(1);
+            TextUtil.CosmeticText(msg, ConsoleColor.Blue, 2, true, true);
+
+        }
+
+        public static void MakeGuess()
+        {
+            bool valid = false;
+            char guessChar = '.';
+            TextUtil.EmptySpaces(2);
+            TextUtil.CosmeticText("INPUT:", ConsoleColor.White, 5, true, false);
+            string input = Console.ReadLine();
+            while (!valid)
+            {
+                try
+                {
+                    guessChar = char.Parse(input);
+                    valid = true;
+                    if (GuessedCheck(guessChar))
+                    {
+                        TextUtil.CosmeticText("ERROR: You have already guessed that character.", ConsoleColor.Red, 25, true, true);
+                        valid = false;
+                        TextUtil.EmptySpaces(1);
+                        TextUtil.CosmeticText("INPUT:", ConsoleColor.White, 50, true, false);
+                        input = Console.ReadLine();
+                    }
+                }
+                catch (Exception e)
+                {
+                    TextUtil.ErrorHandling(e);
+                    valid = false;
+                    TextUtil.EmptySpaces(1);
+                    TextUtil.CosmeticText("INPUT:", ConsoleColor.White, 50, true, false);
+                    input = Console.ReadLine();
+                }
+            }
+            guessedChars.Add(guessChar);
+        }
+
+        public static bool GuessedCheck(char character)
+        {
+            for(int i = 0; i < guessedChars.Count; i++)
+            {
+                if(guessedChars[i] == character)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool CheckWon()
+        {
+            for(int i = 0; i < info.word.Length; i++)
+            {
+                if (!GuessedCheck(info.word[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public static string Retrieve(string url)
@@ -83,7 +188,7 @@ namespace Console_Games.src.Games.Hangman
             {
                 word = Words[rnd.Next(0, Words.Count)];
             }
-            return word;
+            return word.ToLower();
         }
     }
 }
