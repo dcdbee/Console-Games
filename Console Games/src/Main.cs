@@ -6,6 +6,7 @@ using Console_Games.src.Database;
 using Console_Games.src.Account;
 using System.Threading.Tasks;
 using Console_Games.src.Games;
+using Console_Games.src.Games.Snake;
 
 namespace Console_Games
 {
@@ -17,9 +18,11 @@ namespace Console_Games
         static void Main()
         {
             Console.ReadKey();
-            DatabaseManager.CreateDB(dbname);
-            Register.CreateAccountSystem();
-            GameManager.PlayGame("Hangman");
+            Snake2.Init();
+            Console.ReadKey();
+            //DatabaseManager.CreateDB(dbname);
+            //Register.CreateAccountSystem();
+            //GameManager.PlayGame("Hangman");
             //Login.LoginSystem(dbname);
             //Console.ReadKey();
         }

@@ -14,6 +14,10 @@ namespace Console_Games.src.Games
             {
                 Hangman.Hangman.Init();
             }
+            else
+            {
+                Snake.Snake.Init();
+            }
         }
 
     }

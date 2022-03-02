@@ -50,6 +50,9 @@
     <Compile Include="src\Database\DatabaseManager.cs" />
     <Compile Include="src\Games\GameManager.cs" />
     <Compile Include="src\Games\Hangman\Hangman.cs" />
+    <Compile Include="src\Games\Snake\Snake.cs" />
+    <Compile Include="src\Games\Snake\Snake2.cs" />
+    <Compile Include="src\Games\Wordle\Wordle.cs" />
     <Compile Include="src\Main.cs" />
     <Compile Include="src\Util\TextUtil.cs" />
   </ItemGroup>
